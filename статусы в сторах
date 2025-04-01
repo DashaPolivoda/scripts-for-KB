@@ -1,0 +1,49 @@
+<div class="status-container" style="display:inline-block; position: relative;">
+  <button class="statusButton" style="padding: 8px 12px; background-color: #f0f0f0; border: 1px solid #ccc; cursor: pointer;">
+    Выберите статус
+  </button>
+  <ul class="statusList" style="list-style: none; padding: 0; margin: 0; position: absolute; display: none; background-color: #fff; border: 1px solid #ccc; width: 200px;">
+    <li onclick="selectStatus(this, 'Опубликовано', 'green')" style="padding: 8px; cursor: pointer;">Опубликовано</li>
+    <li onclick="selectStatus(this, 'Проверяется стором', 'peachpuff')" style="padding: 8px; cursor: pointer;">Проверяется стором</li>
+    <li onclick="selectStatus(this, 'Можно тестировать', 'yellow')" style="padding: 8px; cursor: pointer;">Можно тестировать</li>
+    <li onclick="selectStatus(this, 'Протестировано', 'lightblue')" style="padding: 8px; cursor: pointer;">Протестировано</li>
+    <li onclick="selectStatus(this, 'Готово к публикации в стор', 'lightgreen')" style="padding: 8px; cursor: pointer;">Готово к публикации в стор</li>
+    <li onclick="selectStatus(this, 'Нужно перезалить', 'purple')" style="padding: 8px; cursor: pointer;">Нужно перезалить</li>
+    <li onclick="selectStatus(this, 'Ожидаем доступ в стор', 'saddlebrown')" style="padding: 8px; cursor: pointer;">Ожидаем доступ в стор</li>
+    <li onclick="selectStatus(this, 'Ждем обновления соглашения', 'red')" style="padding: 8px; cursor: pointer;">Ждем обновления соглашения</li>
+  </ul>
+</div>
+
+<script>
+  document.querySelectorAll('.statusButton').forEach((button, index) => {
+    const list = button.nextElementSibling; // Получаем соответствующий список
+
+    button.onclick = () => {
+      // Закрываем все открытые списки, кроме текущего
+      document.querySelectorAll('.statusList').forEach((el) => {
+        if (el !== list) el.style.display = 'none';
+      });
+
+      // Переключаем видимость текущего списка
+      list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    };
+  });
+
+  function selectStatus(element, status, color) {
+    const container = element.closest('.status-container');
+    const button = container.querySelector('.statusButton');
+
+    button.innerText = status;
+    button.style.backgroundColor = color;
+
+    // Скрываем список после выбора
+    container.querySelector('.statusList').style.display = 'none';
+  }
+
+  // Закрываем списки, если клик вне элемента
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.status-container')) {
+      document.querySelectorAll('.statusList').forEach(list => list.style.display = 'none');
+    }
+  });
+</script>
